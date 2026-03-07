@@ -5,6 +5,7 @@ import { loadEnv } from "vite";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { storyblok } from "@storyblok/astro";
+import netlify from "@astrojs/netlify";
 
 const env = loadEnv("", process.cwd(), "STORYBLOK");
 
@@ -40,4 +41,8 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  adapter: netlify({
+    imageCDN: env.SITE_MODE === "production",
+    edgeMiddleware: false,
+  }),
 });
