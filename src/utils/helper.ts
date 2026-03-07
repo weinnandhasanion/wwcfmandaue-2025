@@ -19,14 +19,14 @@ export const getLinkAttributes = (link: any) => {
 };
 
 // Ensure whoever is using Storyblok preview has the right to.
-export function isAllowedToPreview(request = { url: "" }) {
+export function isAllowedToPreview(request: Request) {
   // localhost check/override
   if (["localhost"].some((domain) => request.url.includes(domain))) {
     return true;
   }
 
   const url = new URL(request.url);
-  const STORYBLOK_ACCESS_TOKEN = import.meta.env.STORYBLOK_ACCESS_TOKEN;
+  const STORYBLOK_ACCESS_TOKEN = import.meta.env.STORYBLOK_PREVIEW_ACCESS_TOKEN;
 
   if (
     url.searchParams.has("_storyblok") &&

@@ -4,13 +4,18 @@ import { twJoin } from "tailwind-merge";
 
 const pathname = Astro.url.pathname;
 
-const isHome = pathname === "/";
+const isHome = pathname === "/" || pathname === "/home";
 ---
 
 <header
   class="w-full absolute top-0 space py-0 text-white z-[100] bg-transparent"
 >
-  <div class={twJoin("mx-container py-4 bg-transparent border-white", isHome && "md:border-b")}>
+  <div
+    class={twJoin(
+      "mx-container py-4 bg-transparent border-white",
+      isHome && "md:border-b",
+    )}
+  >
     <div class="flex justify-between items-center">
       <a href="/">
         <img src={logo.src} alt="Logo" class="h-10 object-cover" />
