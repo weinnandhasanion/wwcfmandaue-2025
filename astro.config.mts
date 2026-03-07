@@ -21,7 +21,7 @@ export default defineConfig({
       apiOptions: {
         region: "eu",
         cache: {
-          clear: "manual",
+          clear: "auto",
         },
       },
       components: {
