@@ -1,0 +1,28 @@
+---
+import Header from "./Header.astro";
+import "@/styles/main.css";
+
+// const { navigation, settings } = await StoryblokApi.getGlobals();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif+Display:ital,wght@0,600..800;1,800&display=swap" rel="stylesheet" />
+    <slot name="head" />
+  </head>
+
+  <body id="app">
+    <Header />
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style></style>

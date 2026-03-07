@@ -1,0 +1,35 @@
+---
+import logo from "@/assets/images/logo-white.png";
+import { twJoin } from "tailwind-merge";
+
+const pathname = Astro.url.pathname;
+
+const isHome = pathname === "/";
+---
+
+<header
+  class="w-full absolute top-0 space py-0 text-white z-[100] bg-transparent"
+>
+  <div class={twJoin("mx-container py-4 bg-transparent border-white", isHome && "md:border-b")}>
+    <div class="flex justify-between items-center">
+      <a href="/">
+        <img src={logo.src} alt="Logo" class="h-10 object-cover" />
+      </a>
+
+      <div class="flex items-center gap-8">
+        <a href="/about" class="link light">About us</a>
+        <a href="/contact" class="link light">Contact</a>
+        <a href="#contact" class="button light">Worship with us</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector("header");
+  const pageBanner = document.querySelector(".page-banner");
+
+  if (pageBanner && pageBanner.classList.contains("bg-white")) {
+    header.classList.add("!bg-primary");
+  }
+</script>
