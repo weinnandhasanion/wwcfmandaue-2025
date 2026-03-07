@@ -16,3 +16,9 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.bg-primary + .bg-primary,
+.bg-black + .bg-black,
+.bg-white + .bg-white {
+  @apply !pt-0;
+}

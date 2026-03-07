@@ -25,6 +25,9 @@ export default defineConfig({
         },
       },
       components: {
+        // Blocks
+        image_and_text: "storyblok/bloks/ImageAndText",
+
         // Page types
         homepage: "storyblok/pages/Home",
         page: "storyblok/pages/Page",

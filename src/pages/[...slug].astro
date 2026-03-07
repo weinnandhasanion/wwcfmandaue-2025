@@ -3,13 +3,22 @@ import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import Layout from "@/layouts/Layout.astro";
 import Meta from "@/components/Meta.astro";
 import { StoryblokApi } from "@/api/storyblok";
+import { getContentVersion } from "@/utils/helper";
+import { isAllowedToPreview } from "@/utils/helper";
 
 const { slug = "home" } = Astro.params;
 
 let story;
+const previewMode = isAllowedToPreview(Astro.request);
+if (previewMode) {
+  Astro.response.headers.set("X-Storyblok-Preview-Mode", "true");
+  Astro.response.headers.set("cache-control", "no-store");
+}
 
 try {
-  story = await StoryblokApi.getPage(slug);
+  story = await StoryblokApi.getPage(slug, {
+    version: getContentVersion(previewMode),
+  });
 
   if (!story) {
     throw new Error(`Story with slug "${slug}" not found`);

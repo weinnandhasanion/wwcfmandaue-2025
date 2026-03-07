@@ -2,9 +2,8 @@ import { useStoryblokApi } from "@storyblok/astro";
 import { getContentVersion } from "@/utils/helper";
 
 const storyblokApi = useStoryblokApi();
-const version = getContentVersion();
 
-const getGlobals = async () => {
+const getGlobals = async (version: "draft" | "published") => {
   const { data: globals } = await storyblokApi.get("cdn/stories/globals", {
     version,
   });
@@ -15,15 +14,12 @@ const getGlobals = async () => {
 const getPage = async (
   slug: string,
   params?: any,
-  options?: any
+  options?: any,
 ): Promise<any> => {
   const response = await storyblokApi.get(
     `cdn/stories/${slug}`,
-    {
-      version,
-      ...params,
-    },
-    options
+    params,
+    options,
   );
 
   return response.data.story;

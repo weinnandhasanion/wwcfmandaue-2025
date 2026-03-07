@@ -1,0 +1,58 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+import { twJoin } from "tailwind-merge";
+import Link from "@/components/Link.astro";
+
+const { blok } = Astro.props;
+const {
+  tagline,
+  title,
+  description,
+  image,
+  left_image,
+  background_color = "bg-white",
+  link,
+} = blok;
+
+let textColor = "text-black";
+let taglineColor = "text-primary";
+let buttonClass = "primary";
+
+if (background_color === "bg-primary" || background_color === "bg-black") {
+  textColor = "text-white";
+  taglineColor = "text-white";
+  buttonClass = "light";
+}
+---
+
+<section
+  class={twJoin("text-and-image-section space", background_color)}
+  {...storyblokEditable(blok)}
+>
+  <div class="mx-container">
+    <div
+      class={twJoin(
+        "flex flex-col lg:flex-row gap-8",
+        left_image && "lg:flex-row-reverse",
+      )}
+    >
+      <div class="w-full lg:w-3/7">
+        <small class={twJoin(taglineColor, "text-sm font-black")}
+          >{tagline}</small
+        >
+        <h2 class={twJoin(textColor, "text-4xl mb-2 font-display")}>
+          {title}
+        </h2>
+        <p class={twJoin(textColor, "text-base")}>{description}</p>
+        <Link link={link} className={twJoin("button mt-8", buttonClass)} />
+      </div>
+      <div class="w-full lg:w-4/7">
+        <img
+          src={image.filename}
+          alt={image.alt}
+          class="size-full object-cover aspect-[5/3]"
+        />
+      </div>
+    </div>
+  </div>
+</section>
