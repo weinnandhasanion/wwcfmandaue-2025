@@ -1,38 +1,49 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import Meta from "@/components/Meta.astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import { twJoin } from "tailwind-merge";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import { hasLink } from "@/utils/helper";
+import Link from "@/components/Link.astro";
 
 const { blok } = Astro.props;
-const { banner_title, banner_bg_color } = blok;
+const {
+  banner_title,
+  banner_subtitle,
+  banner_bg_color = "bg-primary",
+  banner_link,
+} = blok;
 
-const bannerTextColor =
-  banner_bg_color === "bg-white" ? "text-primary" : "text-white";
+let textColor = "text-black";
+let buttonClass = "primary";
 
-const bannerCtaColor = banner_bg_color !== "bg-white" ? "light" : "primary";
+if (banner_bg_color === "bg-primary" || banner_bg_color === "bg-black") {
+  textColor = "text-white";
+  buttonClass = "light";
+}
 ---
 
-<section class={twJoin("page-banner space--sm min-h-[240px]", banner_bg_color)}>
-  <div class="mx-container flex flex-col h-full min-h-[240px] justify-end">
-    <h1 class={twJoin("text-4xl font-[600] mb-2", bannerTextColor)}>
+<section
+  class={twJoin("page-banner space--sm min-h-[240px]", banner_bg_color)}
+  {...storyblokEditable(blok)}
+>
+  <div class="mx-container flex flex-col h-full min-h-[340px] justify-end">
+    <h1 class={twJoin("text-4xl font-[600] mb-2", textColor)}>
       {banner_title}
     </h1>
-    <p class="text-white text-lg">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-    </p>
-    <a class={twJoin("button", bannerCtaColor, "mt-8")}>Worship with us</a>
+    {
+      banner_subtitle && (
+        <p class={twJoin("text-white text-lg", textColor)}>{banner_subtitle}</p>
+      )
+    }
+    {
+      hasLink(banner_link) && (
+        <Link
+          link={banner_link}
+          className={twJoin("button", buttonClass, "mt-4")}
+        />
+      )
+    }
   </div>
 </section>
 
-<section class="text-and-image-section space">
-  <div class="mx-container">
-    <div class="flex flex-col lg:flex-row gap-8">
-      <div class="w-full lg:w-1/2">
-        <h2 class="text-3xl">Text and image</h2>
-      </div>
-    </div>
-  </div>
-</section>
-
-{blok.body?.map((blok) => <StoryblokComponent blok={blok} />)}
+{blok.body?.map((blok: SbBlokData) => <StoryblokComponent blok={blok} />)}

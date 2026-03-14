@@ -1,25 +1,29 @@
 @layer components {
-    .button {
-        @apply rounded-sm px-6 py-2 flex justify-center items-center text-[14px] w-max;
+  .button {
+    @apply rounded-sm px-6 py-2 flex justify-center items-center text-[14px] w-max h-max;
 
-        &.primary {
-            @apply bg-primary text-white;
-        }
-
-        &.light {
-            @apply bg-white text-black hover:bg-primary hover:text-white;
-        }
+    &.primary {
+      @apply bg-primary text-white;
     }
 
-    .link {
-        @apply text-[14px]; 
-
-        &.primary {
-            @apply text-primary hover:text-primary/80;
-        }
-
-        &.light {
-            @apply text-white hover:text-white/80;
-        }
+    &.light {
+      @apply bg-white text-black hover:bg-primary hover:text-white;
     }
+
+    &.light--black {
+      @apply bg-white text-black hover:bg-black hover:text-white;
+    }
+  }
+
+  .link {
+    @apply text-[14px];
+
+    &.primary {
+      @apply text-primary hover:text-primary/80;
+    }
+
+    &.light {
+      @apply text-white hover:text-white/80;
+    }
+  }
 }

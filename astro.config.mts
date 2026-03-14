@@ -14,6 +14,9 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
+  server: {
+    allowedHosts: ["localhost", "127.0.0.1"],
+  },
   integrations: [
     react(),
     storyblok({
@@ -26,6 +29,7 @@ export default defineConfig({
       },
       components: {
         // Blocks
+        cta: "storyblok/bloks/Cta",
         image_and_text: "storyblok/bloks/ImageAndText",
 
         // Page types

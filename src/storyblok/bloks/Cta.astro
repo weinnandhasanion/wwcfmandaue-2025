@@ -1,0 +1,72 @@
+---
+import Link from "@/components/Link.astro";
+import { hasImage, hasLink } from "@/utils/helper";
+import { twJoin } from "tailwind-merge";
+
+const { blok } = Astro.props;
+const {
+  tagline,
+  heading,
+  description,
+  link,
+  background_color = 'bg-primary',
+  background_image,
+  full_width,
+} = blok;
+
+let textColor = "text-black";
+let taglineColor = "text-primary";
+let buttonClass = "primary";
+
+if (background_color === "bg-primary" || background_color === "bg-black") {
+  textColor = "text-white";
+  taglineColor = "text-white";
+  buttonClass = "light";
+}
+---
+
+<section class="cta-section space bg-white">
+  <div class="mx-container">
+    <div
+      class={twJoin(
+        "w-full rounded-xl px-8 py-10 flex flex-col lg:min-h-[240px] lg:flex-row gap-12 relative",
+        background_color,
+      )}
+    >
+      {
+        hasImage(background_image) && (
+          <div class="absolute inset-0 bg-black/50 z-0"></div>
+          <div class="absolute inset-0 z-1">
+            <img
+              src={background_image.filename}
+              alt={background_image.alt}
+              class="size-full object-cover"
+            />
+          </div>
+        )
+      }
+      <div class="w-full lg:w-1/2">
+        {
+          tagline && (
+            <small class={twJoin(taglineColor, "text-sm font-black")}>
+              {tagline}
+            </small>
+          )
+        }
+        <h3 class={twJoin(textColor, "text-4xl font-display mb-2")}>
+          {heading}
+        </h3>
+      </div>
+      <div class="w-full lg:w-1/2">
+        <p class={twJoin(textColor, "text-xl mb-4")}>
+          {description}
+        </p>
+        {
+          hasLink(link) && (
+            <Link link={link} className={twJoin("button", buttonClass)} />
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

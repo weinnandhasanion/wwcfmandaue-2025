@@ -2,6 +2,7 @@
 import { storyblokEditable } from "@storyblok/astro";
 import { twJoin } from "tailwind-merge";
 import Link from "@/components/Link.astro";
+import { hasLink } from "@/utils/helper";
 
 const { blok } = Astro.props;
 const {
@@ -44,7 +45,11 @@ if (background_color === "bg-primary" || background_color === "bg-black") {
           {title}
         </h2>
         <p class={twJoin(textColor, "text-base")}>{description}</p>
-        <Link link={link} className={twJoin("button mt-8", buttonClass)} />
+        {
+          hasLink(link) && (
+            <Link link={link} className={twJoin("button mt-8", buttonClass)} />
+          )
+        }
       </div>
       <div class="w-full lg:w-4/7">
         <img

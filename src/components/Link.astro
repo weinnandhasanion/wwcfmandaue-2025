@@ -1,16 +1,11 @@
 ---
 import { getLinkAttributes } from "@/utils/helper";
-import { twJoin } from "tailwind-merge";
 
-const { link, className = "" } = Astro.props;
+const { link, className = "button primary" } = Astro.props;
 
 const { href, title, target, rel } = getLinkAttributes(link);
 ---
 
-<a
-  href={href}
-  title={title}
-  target={target}
-  rel={rel}
-  class={twJoin("button", className)}>{title}</a
+<a href={href} title={title} target={target} rel={rel} class={className}
+  >{title}</a
 >

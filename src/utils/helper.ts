@@ -4,6 +4,20 @@ export const getContentVersion = (previewMode: boolean) => {
   return previewMode ? "draft" : "published";
 };
 
+export const hasImage = (image: any) => {
+  if (!image) return false;
+
+  return !!(image.id && image.filename);
+};
+
+export const hasLink = (link: any) => {
+  if (!link) return false;
+
+  return link.linktype === "story"
+    ? !!(link.cached_url || link.url)
+    : !!link.url;
+};
+
 export const getLinkAttributes = (link: any) => {
   if (!link) return {};
 

@@ -6,6 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "dev-proxy": "concurrently --names \"DEV,PROXY\" --prefix-colors \"bgBlue.bold,bgGreen.bold\" \"npm run dev\" \"npm run proxy\"",
+    "proxy": "local-ssl-proxy --config ./.ssl/config.json",
+    "cert": "mkcert -cert-file ./.ssl/localhost.pem -key-file ./.ssl/localhost-key.pem localhost",
     "astro": "astro"
   },
   "dependencies": {

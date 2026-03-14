@@ -1,19 +1,23 @@
 ---
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 
 const { blok } = Astro.props;
 const { banner_title, banner_subtitle, banner_image } = blok;
 ---
 
-<section class="space home-banner-section h-screen overflow-hidden relative">
+<section
+  class="space home-banner-section h-screen overflow-hidden relative"
+  {...storyblokEditable(blok)}
+>
   <div class="mx-container h-full flex flex-col justify-end relative z-1">
     <div class="w-full md:max-w-2/3">
       <h1
         class="text-6xl leading-[1.1] text-white font-[800] font-display mb-4"
       >
-        A church that loves God, and loves people.
+        {banner_title}
       </h1>
-      <p class="text-white text-xl">{banner_subtitle}</p>
+      <p class="text-white !text-lg lg:!text-xl">{banner_subtitle}</p>
     </div>
   </div>
 
@@ -28,52 +32,4 @@ const { banner_title, banner_subtitle, banner_image } = blok;
   <div class="absolute inset-0 bg-black/50"></div>
 </section>
 
-<section class="text-and-image-section space">
-  <div class="mx-container">
-    <div class="flex flex-col lg:flex-row gap-8">
-      <div class="w-full lg:w-3/7">
-        <small class="text-primary text-sm font-black">OUR MISSION</small>
-        <h2 class="text-4xl mb-2 font-display">
-          To change the world for Christ, one soul at a time
-        </h2>
-        <p class="text-base">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-          quos.
-        </p>
-      </div>
-      <div class="w-full lg:w-4/7">
-        <img
-          src={banner_image.filename}
-          alt={banner_image.alt}
-          class="size-full object-cover aspect-[5/3]"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="text-and-image-section space bg-primary">
-  <div class="mx-container">
-    <div class="flex flex-col-reverse lg:flex-row-reverse gap-12">
-      <div class="w-full lg:w-3/7">
-        <small class="text-sm font-black text-white">OUR MISSION</small>
-        <h2 class="text-4xl mb-2 font-display text-white">
-          To change the world for Christ, one soul at a time
-        </h2>
-        <p class="text-base text-white">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-          quos.
-        </p>
-      </div>
-      <div class="w-full lg:w-4/7">
-        <img
-          src={banner_image.filename}
-          alt={banner_image.alt}
-          class="size-full object-cover aspect-[5/3]"
-        />
-      </div>
-    </div>
-  </div>
-</section>
-
-{blok.body?.map((blok) => <StoryblokComponent blok={blok} />)}
+{blok.body?.map((blok: SbBlokData) => <StoryblokComponent blok={blok} />)}
