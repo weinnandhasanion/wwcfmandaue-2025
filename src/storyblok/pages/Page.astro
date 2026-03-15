@@ -1,45 +1,45 @@
 ---
-import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
-import { twJoin } from "tailwind-merge";
-import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-import { hasLink } from "@/utils/helper";
-import Link from "@/components/Link.astro";
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+import { twJoin } from 'tailwind-merge';
+import { storyblokEditable, type SbBlokData } from '@storyblok/astro';
+import { hasLink } from '@/utils/helper';
+import Link from '@/components/Link.astro';
 
 const { blok } = Astro.props;
 const {
   banner_title,
   banner_subtitle,
-  banner_bg_color = "bg-primary",
+  banner_bg_color = 'bg-primary',
   banner_link,
 } = blok;
 
-let textColor = "text-black";
-let buttonClass = "primary";
+let textColor = 'text-black';
+let buttonClass = 'primary';
 
-if (banner_bg_color === "bg-primary" || banner_bg_color === "bg-black") {
-  textColor = "text-white";
-  buttonClass = "light";
+if (banner_bg_color === 'bg-primary' || banner_bg_color === 'bg-black') {
+  textColor = 'text-white';
+  buttonClass = banner_bg_color === 'bg-primary' ? 'light--black' : 'light';
 }
 ---
 
 <section
-  class={twJoin("page-banner space--sm min-h-[240px]", banner_bg_color)}
+  class={twJoin('page-banner space--sm min-h-[240px]', banner_bg_color)}
   {...storyblokEditable(blok)}
 >
-  <div class="mx-container flex flex-col h-full min-h-[340px] justify-end">
-    <h1 class={twJoin("text-4xl font-[600] mb-2", textColor)}>
+  <div class="mx-container flex flex-col h-full min-h-[260px] md:min-h-[380px] justify-end">
+    <h1 class={twJoin('h2 font-black font-display mb-2', textColor)}>
       {banner_title}
     </h1>
     {
       banner_subtitle && (
-        <p class={twJoin("text-white text-lg", textColor)}>{banner_subtitle}</p>
+        <p class={twJoin('h6', textColor)}>{banner_subtitle}</p>
       )
     }
     {
       hasLink(banner_link) && (
         <Link
           link={banner_link}
-          className={twJoin("button", buttonClass, "mt-4")}
+          className={twJoin('button', buttonClass, 'mt-4')}
         />
       )
     }

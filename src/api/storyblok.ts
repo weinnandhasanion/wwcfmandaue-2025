@@ -4,14 +4,11 @@ import { getContentVersion } from "@/utils/helper";
 const storyblokApi = useStoryblokApi();
 
 const getSettings = async (version: "draft" | "published") => {
-  const { data: globals } = await storyblokApi.get(
-    "cdn/stories/globals/settings",
-    {
-      version,
-    },
-  );
+  const { data } = await storyblokApi.get("cdn/stories/globals/settings", {
+    version,
+  });
 
-  return globals;
+  return data.story.content;
 };
 
 const getNavigation = async (version: "draft" | "published") => {
@@ -26,7 +23,12 @@ const getNavigation = async (version: "draft" | "published") => {
     links: navigation.story.content.header_navigation_items,
     cta: navigation.story.content.call_to_action,
   };
-  const footerItems = navigation.story.content.footer_navigation_items;
+
+  const footerItems = {
+    columns: navigation.story.content.footer_columns,
+    cta_text: navigation.story.content.footer_cta_text,
+    cta_link: navigation.story.content.footer_cta_link,
+  };
 
   return {
     headerItems,

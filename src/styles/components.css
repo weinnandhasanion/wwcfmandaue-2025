@@ -1,9 +1,9 @@
 @layer components {
   .button {
-    @apply rounded-sm px-6 py-2 flex justify-center items-center text-[14px] w-max h-max;
+    @apply rounded-sm px-6 py-2 flex justify-center items-center text-[14px] w-max h-max transition-all duration-200 ease-out w-max;
 
     &.primary {
-      @apply bg-primary text-white;
+      @apply bg-primary text-white hover:bg-primary/80;
     }
 
     &.light {
@@ -16,14 +16,14 @@
   }
 
   .link {
-    @apply text-[14px];
+    @apply text-[14px] transition-all duration-200 ease-out w-max;
 
     &.primary {
-      @apply text-primary hover:text-primary/80;
+      @apply text-primary;
     }
 
     &.light {
-      @apply text-white hover:text-white/80;
+      @apply text-white;
     }
   }
 }

@@ -1,0 +1,98 @@
+---
+import logo from "@/assets/images/logo-white.png";
+import SocialIcon from "@/components/SocialIcon.astro";
+import { hasLink } from "@/utils/helper";
+import Link from "@/components/Link.astro";
+
+const { footerItems, settings } = Astro.props;
+const { columns, cta_text, cta_link } = footerItems;
+const { facebook_url, instagram_url } = settings;
+
+console.log("facebook_url", facebook_url);
+---
+
+<footer class="bg-primary space py-10 pb-4">
+  <div class="mx-container">
+    <div class="grid grid-cols-4 lg:grid-cols-12 gap-8 lg:gap-20">
+      <div class="flex flex-col gap-4 w-full col-span-4 lg:col-span-3">
+        <a href="/" class="logo"
+          ><img
+            src={logo.src}
+            alt="Logo"
+            class="w-full object-cover max-w-[300px]"
+          /></a
+        >
+        <div class="flex gap-4 lg:justify-between items-center">
+          <p class="text-white text-md mb-0">Connect with us</p>
+          <div class="flex gap-3 items-center">
+            {
+              hasLink(facebook_url) && (
+                <SocialIcon icon="facebook" href={facebook_url.url} />
+              )
+            }
+            {
+              hasLink(instagram_url) && (
+                <SocialIcon icon="instagram" href={instagram_url.url} />
+              )
+            }
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex gap-6 md:justify-between flex-wrap col-span-4 md:col-span-2 lg:col-span-5"
+      >
+        {
+          columns.map((column: any) => (
+            <div class="flex flex-col gap-2">
+              {!!column.navigation_items?.length &&
+                column.navigation_items?.map((item: any) => (
+                  <>
+                    <Link
+                      link={item.link}
+                      className="link text-white text-sm font-medium mb-1"
+                    />
+                    {!!item.navigation_items?.length && (
+                      <ul class="flex flex-col gap-1.5">
+                        {item.navigation_items?.map((childItem: any) => (
+                          <li>
+                            <Link
+                              link={childItem.link}
+                              className="link text-white text-sm"
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                ))}
+            </div>
+          ))
+        }
+      </div>
+
+      <div
+        class="flex flex-col md:items-end col-span-4 md:col-span-2 lg:col-span-4 md:text-right"
+      >
+        <p class="text-white text-2xl font-display">
+          {cta_text}
+        </p>
+        {
+          hasLink(cta_link) && (
+            <Link link={cta_link} className="button light--black" />
+          )
+        }
+      </div>
+    </div>
+    <div
+      class="mt-8 pt-4 border-t border-white flex flex-wrap gap-4 text-xs text-white items-center"
+    >
+      <p class="text-xs mb-0">&copy; WWCF Mandaue {new Date().getFullYear()}</p>
+      <a href="/">Privacy policy</a>
+      <a href="/">Terms of service</a>
+      <span class="sm:flex-1 text-right"
+        >Website by <a href="https://weinn.dev">weinn.dev</a></span
+      >
+    </div>
+  </div>
+</footer>

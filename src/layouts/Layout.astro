@@ -1,9 +1,11 @@
 ---
-import Header from "./Header.astro";
-import "@/styles/main.css";
-import { StoryblokApi } from "@/api/storyblok";
+import Header from './Header.astro';
+import '@/styles/main.css';
+import { StoryblokApi } from '@/api/storyblok';
+import Footer from './Footer.astro';
 
-const { headerItems, footerItems } = await StoryblokApi.getNavigation("draft");
+const { headerItems, footerItems } = await StoryblokApi.getNavigation('draft');
+const settings = await StoryblokApi.getSettings('draft');
 ---
 
 <!doctype html>
@@ -26,7 +28,6 @@ const { headerItems, footerItems } = await StoryblokApi.getNavigation("draft");
     <main>
       <slot />
     </main>
+    <Footer footerItems={footerItems} settings={settings} />
   </body>
 </html>
-
-<style></style>
