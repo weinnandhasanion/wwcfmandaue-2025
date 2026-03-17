@@ -1,0 +1,53 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+import { twJoin } from 'tailwind-merge';
+import { hasImage } from '@/utils/helper';
+
+const { blok } = Astro.props;
+const {
+  verse,
+  reference,
+  background_color = 'bg-white',
+  background_image,
+  blur_image,
+} = blok;
+
+let textColor = 'text-primary';
+const imageExists = hasImage(background_image);
+
+if (
+  background_color === 'bg-primary' ||
+  background_color === 'bg-black' ||
+  imageExists
+) {
+  textColor = 'text-white';
+}
+---
+
+<section
+  class={twJoin('bible-verse-section space relative', background_color)}
+  {...storyblokEditable(blok)}
+>
+  {
+    imageExists && (
+      <>
+        <div class="absolute inset-0 z-1">
+          <img
+            src={background_image.filename}
+            alt={background_image.alt}
+            class={twJoin('size-full object-cover', blur_image && 'blur-xs')}
+          />
+        </div>
+        <div class="absolute inset-0 bg-black/50 z-2" />
+      </>
+    )
+  }
+  <div class="mx-container lg:text-center lg:max-w-4/5 relative z-2">
+    <p
+      class={twJoin(textColor, 'text-2xl font-display font-bolder')}
+    >
+      {verse}
+    </p>
+    <p class={twJoin(textColor, 'text-lg')}>{reference}</p>
+  </div>
+</section>
