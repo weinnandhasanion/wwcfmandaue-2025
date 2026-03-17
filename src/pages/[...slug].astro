@@ -46,5 +46,5 @@ Astro.response.headers.set("netlify-cache-tag", slug);
 <Layout>
   <Meta slot="head" title="Home" description="This is the home page" />
 
-  <StoryblokComponent blok={story.content} {...story} />
+  <StoryblokComponent blok={story?.content} {...story} />
 </Layout>

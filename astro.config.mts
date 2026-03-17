@@ -31,7 +31,8 @@ export default defineConfig({
         // Blocks
         cta: "storyblok/bloks/Cta",
         image_and_text: "storyblok/bloks/ImageAndText",
-
+        carousel: "storyblok/bloks/Carousel",
+        
         // Page types
         homepage: "storyblok/pages/Home",
         page: "storyblok/pages/Page",

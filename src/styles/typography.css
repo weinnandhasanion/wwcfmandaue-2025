@@ -27,7 +27,7 @@
     @apply text-sm md:text-base mb-2;
   }
 
-  a:not(.button):not(.menu-link):not(.social-icon):not(.logo) {
+  a:not(.button):not(.menu-link):not(.social-icon):not(.logo):not(.icon) {
     @apply relative;
 
     &::before {

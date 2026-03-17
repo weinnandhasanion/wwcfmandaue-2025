@@ -1,8 +1,8 @@
 ---
-import { storyblokEditable } from "@storyblok/astro";
-import { twJoin } from "tailwind-merge";
-import Link from "@/components/Link.astro";
-import { hasLink } from "@/utils/helper";
+import { storyblokEditable } from '@storyblok/astro';
+import { twJoin } from 'tailwind-merge';
+import Link from '@/components/Link.astro';
+import { hasLink } from '@/utils/helper';
 
 const { blok } = Astro.props;
 const {
@@ -10,53 +10,71 @@ const {
   title,
   description,
   image,
-  left_image,
-  background_color = "bg-white",
+  invert_layout,
+  background_color = 'bg-white',
   link,
 } = blok;
 
-let textColor = "text-black";
-let taglineColor = "text-primary";
-let buttonClass = "primary";
+let textColor = 'text-black';
+let taglineColor = 'text-primary';
+let buttonClass = 'primary';
 
-if (background_color === "bg-primary" || background_color === "bg-black") {
-  textColor = "text-white";
-  taglineColor = "text-white";
-  buttonClass = background_color === "bg-primary" ? "light--black" : "light";
+if (background_color === 'bg-primary' || background_color === 'bg-black') {
+  textColor = 'text-white';
+  taglineColor = 'text-white';
+  buttonClass = background_color === 'bg-primary' ? 'light--black' : 'light';
 }
 ---
 
 <section
-  class={twJoin("text-and-image-section space", background_color)}
+  class={twJoin('text-and-image-section space', background_color)}
   {...storyblokEditable(blok)}
 >
   <div class="mx-container">
     <div
       class={twJoin(
-        "flex flex-col lg:flex-row gap-8",
-        left_image && "lg:flex-row-reverse",
+        'flex flex-col lg:flex-row gap-8',
+        invert_layout && 'lg:flex-row-reverse'
       )}
     >
+      <div class="w-full lg:w-4/7">
+        <picture>
+          <source
+            media="(max-width: 640px)"
+            srcset={`${image.filename}/m/640x0`}
+          />
+          <source
+            media="(max-width: 1024px)"
+            srcset={`${image.filename}/m/1024x0`}
+          />
+          <source
+            media="(min-width: 1025px)"
+            srcset={`${image.filename}/m/1280x0`}
+          />
+          <img
+            src={`${image.filename}/m/1280x0`}
+            alt={image.alt ?? ''}
+            class="size-full object-cover aspect-[5/3]"
+            width="1280"
+            height="768"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </div>
       <div class="w-full lg:w-3/7">
-        <small class={twJoin(taglineColor, "uppercase text-sm font-black")}
+        <small class={twJoin(taglineColor, 'uppercase text-sm font-black')}
           >{tagline}</small
         >
-        <h3 class={twJoin(textColor, "mb-2 font-display")}>
+        <h3 class={twJoin(textColor, 'mb-2 font-display')}>
           {title}
         </h3>
-        <p class={twJoin(textColor, "text-base")}>{description}</p>
+        <p class={twJoin(textColor, 'text-base')}>{description}</p>
         {
           hasLink(link) && (
-            <Link link={link} className={twJoin("button mt-4", buttonClass)} />
+            <Link link={link} className={twJoin('button mt-4', buttonClass)} />
           )
         }
-      </div>
-      <div class="w-full lg:w-4/7">
-        <img
-          src={image.filename}
-          alt={image.alt}
-          class="size-full object-cover aspect-[5/3]"
-        />
       </div>
     </div>
   </div>

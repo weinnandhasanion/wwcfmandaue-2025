@@ -8,7 +8,7 @@ const getSettings = async (version: "draft" | "published") => {
     version,
   });
 
-  return data.story.content;
+  return data.story?.content;
 };
 
 const getNavigation = async (version: "draft" | "published") => {
@@ -20,14 +20,14 @@ const getNavigation = async (version: "draft" | "published") => {
   );
 
   const headerItems = {
-    links: navigation.story.content.header_navigation_items,
-    cta: navigation.story.content.call_to_action,
+    links: navigation.story?.content.header_navigation_items,
+    cta: navigation.story?.content.call_to_action,
   };
 
   const footerItems = {
-    columns: navigation.story.content.footer_columns,
-    cta_text: navigation.story.content.footer_cta_text,
-    cta_link: navigation.story.content.footer_cta_link,
+    columns: navigation.story?.content.footer_columns,
+    cta_text: navigation.story?.content.footer_cta_text,
+    cta_link: navigation.story?.content.footer_cta_link,
   };
 
   return {

@@ -2,7 +2,7 @@
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
 import { twJoin } from 'tailwind-merge';
 import { storyblokEditable, type SbBlokData } from '@storyblok/astro';
-import { hasLink } from '@/utils/helper';
+import { hasImage, hasLink } from '@/utils/helper';
 import Link from '@/components/Link.astro';
 
 const { blok } = Astro.props;
@@ -11,22 +11,47 @@ const {
   banner_subtitle,
   banner_bg_color = 'bg-primary',
   banner_link,
+  banner_image,
 } = blok;
 
 let textColor = 'text-black';
 let buttonClass = 'primary';
 
-if (banner_bg_color === 'bg-primary' || banner_bg_color === 'bg-black') {
+const imageExists = hasImage(banner_image);
+
+if (
+  banner_bg_color === 'bg-primary' ||
+  banner_bg_color === 'bg-black' ||
+  imageExists
+) {
   textColor = 'text-white';
   buttonClass = banner_bg_color === 'bg-primary' ? 'light--black' : 'light';
 }
 ---
 
 <section
-  class={twJoin('page-banner space--sm min-h-[240px]', banner_bg_color)}
+  class={twJoin(
+    'page-banner space--sm relative overflow-hidden',
+    imageExists ? 'h-screen md:h-[85vh]' : 'h-[260px] md:h-[380px]',
+    banner_bg_color
+  )}
   {...storyblokEditable(blok)}
 >
-  <div class="mx-container flex flex-col h-full min-h-[260px] md:min-h-[380px] justify-end">
+  {
+    imageExists && (
+      <div class="z-1">
+        <div class="absolute inset-0 z-1">
+          <img
+            src={banner_image.filename}
+            alt={banner_image.alt}
+            class="size-full object-cover"
+          />
+        </div>
+        <div class="absolute inset-0 bg-black/50 z-1" />
+      </div>
+    )
+  }
+  <div class="mx-container flex flex-col h-full justify-end relative z-2">
     <h1 class={twJoin('h2 font-black font-display mb-2', textColor)}>
       {banner_title}
     </h1>

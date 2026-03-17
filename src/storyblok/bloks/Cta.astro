@@ -55,9 +55,9 @@ if (
               {tagline}
             </small>
           )}
-          <h3 class={twJoin(textColor, 'font-display my-2')}>{heading}</h3>
+          <h3 class={twJoin(textColor, 'font-display')}>{heading}</h3>
         </div>
-        <div class="w-full lg:w-1/2">
+        <div class="w-full lg:w-1/2 pt-0 lg:pt-6">
           <p class={twJoin(textColor, 'mb-4')}>{description}</p>
           {hasLink(link) && (
             <Link link={link} className={twJoin('button', buttonClass)} />
@@ -92,9 +92,9 @@ if (
                 {tagline}
               </small>
             )}
-            <h3 class={twJoin(textColor, 'font-display my-2')}>{heading}</h3>
+            <h3 class={twJoin(textColor, 'font-display')}>{heading}</h3>
           </div>
-          <div class="w-full lg:w-1/2 z-2 pt-0 lg:pt-8">
+          <div class="w-full lg:w-1/2 z-2 pt-0 lg:pt-6">
             <p class={twJoin(textColor, 'mb-4')}>{description}</p>
             {hasLink(link) && (
               <Link link={link} className={twJoin('button', buttonClass)} />
