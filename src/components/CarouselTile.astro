@@ -23,9 +23,32 @@ const { title, description, image, link } = blok;
 
       <a
         href={link.cached_url || link.url}
-        class="icon size-7 aspect-square bg-primary group-hover:bg-black flex items-center justify-center mb-1 mr-1 transition-all duration-200 ease-out"
+        class="icon size-7 aspect-square bg-white text-primary group-hover:bg-primary group-hover:text-white flex items-center justify-center mb-1 mr-1 transition-all duration-200 ease-out"
       >
-        <ChevronRight />
+        <svg
+          width="14px"
+          height="14px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          stroke="currentColor"
+          stroke-width="0.00024000000000000003"
+        >
+          <>
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M13.9394 12.0001L8.46973 6.53039L9.53039 5.46973L16.0607 12.0001L9.53039 18.5304L8.46973 17.4697L13.9394 12.0001Z"
+                fill="currentColor"></path>
+            </g>
+          </>
+        </svg>
       </a>
     </div>
   </div>

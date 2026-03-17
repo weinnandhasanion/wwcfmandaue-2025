@@ -1,0 +1,17 @@
+---
+const { id, barColor = 'black' } = Astro.props;
+---
+
+<div id={id} class="swiper-pagination-progressbar"></div>
+
+<style define:vars={{ barColor }}>
+  .swiper-pagination-progressbar {
+    position: relative;
+    overflow: hidden !important;
+    height: 1px !important;
+
+    .swiper-pagination-progressbar-fill {
+      background: var(--barColor);
+    }
+  }
+</style>

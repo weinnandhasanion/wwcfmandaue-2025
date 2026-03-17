@@ -1,10 +1,9 @@
 ---
 import { storyblokEditable } from '@storyblok/astro';
 import { twJoin } from 'tailwind-merge';
-import ChevronLeft from '@/assets/svg/chevron-left.svg';
-import ChevronRight from '@/assets/svg/chevron-right.svg';
 import SwiperNavButton from '@/components/SwiperNavButton.astro';
 import CarouselTile from '@/components/CarouselTile.astro';
+import SwiperProgressBar from '@/components/SwiperProgressBar.astro';
 
 const { blok } = Astro.props;
 const {
@@ -17,10 +16,14 @@ const {
 
 let textColor = 'text-black';
 let taglineColor = 'text-primary';
+let buttonBackgroundColor = 'bg-primary hover:bg-black text-white';
+let barColor = 'black';
 
 if (background_color === 'bg-primary' || background_color === 'bg-black') {
   textColor = 'text-white';
   taglineColor = 'text-white';
+  barColor = 'white';
+  buttonBackgroundColor = `bg-white hover:text-white ${background_color === 'bg-primary' ? 'text-primary hover:bg-black' : 'text-black hover:bg-primary '}`;
 }
 
 const swiperId = blok._uid;
@@ -49,17 +52,21 @@ const swiperId = blok._uid;
         </div>
 
         <div class="flex items-end gap-6 mt-4 lg:mt-8">
-          <div id={`carousel-pagination-${swiperId}`}></div>
+          <SwiperProgressBar
+            id={`carousel-pagination-${swiperId}`}
+            barColor={barColor}
+          />
           <div class="flex items-center gap-2">
             <SwiperNavButton
               id={`carousel-prev-${swiperId}`}
               ariaLabel="Previous slide"
-              svg={ChevronLeft}
+              className={buttonBackgroundColor}
             />
             <SwiperNavButton
               id={`carousel-next-${swiperId}`}
               ariaLabel="Next slide"
-              svg={ChevronRight}
+              className={buttonBackgroundColor}
+              direction="right"
             />
           </div>
         </div>
@@ -67,18 +74,6 @@ const swiperId = blok._uid;
     </div>
   </div>
 </section>
-
-<style>
-  .swiper-pagination-progressbar {
-    position: relative;
-    overflow: hidden !important;
-    height: 1px !important;
-
-    .swiper-pagination-progressbar-fill {
-      background: black;
-    }
-  }
-</style>
 
 <script>
   import Swiper from 'swiper';
