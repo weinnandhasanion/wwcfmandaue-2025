@@ -1,0 +1,14 @@
+---
+const { blok } = Astro.props;
+---
+
+<div
+  class="py-space px-space border-primary/50 overflow-hidden border border-dashed"
+>
+  <div class="mx-container space-y-4 text-center">
+    <h1 class="font-display">
+      Missing component: <span class="dark:text-primary">{blok.component}</span>
+    </h1>
+    <p>This is a fallback component for a missing component.</p>
+  </div>
+</div>

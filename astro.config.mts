@@ -27,12 +27,15 @@ export default defineConfig({
           clear: 'auto',
         },
       },
+      enableFallbackComponent: true,
+      customFallbackComponent: 'storyblok/bloks/Fallback',
       components: {
         // Blocks
         cta: 'storyblok/bloks/Cta',
         image_and_text: 'storyblok/bloks/ImageAndText',
         carousel: 'storyblok/bloks/Carousel',
         bible_verse: 'storyblok/bloks/BibleVerse',
+        church_members: 'storyblok/bloks/ChurchMembers',
 
         // Page types
         homepage: 'storyblok/pages/Home',

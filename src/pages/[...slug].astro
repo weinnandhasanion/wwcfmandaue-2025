@@ -1,23 +1,25 @@
 ---
-import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
-import Layout from "@/layouts/Layout.astro";
-import Meta from "@/components/Meta.astro";
-import { StoryblokApi } from "@/api/storyblok";
-import { getContentVersion } from "@/utils/helper";
-import { isAllowedToPreview } from "@/utils/helper";
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+import Layout from '@/layouts/Layout.astro';
+import Meta from '@/components/Meta.astro';
+import { StoryblokApi } from '@/api/storyblok';
+import { getContentVersion } from '@/utils/helper';
+import { isAllowedToPreview } from '@/utils/helper';
 
-const { slug = "home" } = Astro.params;
+const { slug = 'home' } = Astro.params;
 
 let story;
 const previewMode = isAllowedToPreview(Astro.request);
 if (previewMode) {
-  Astro.response.headers.set("X-Storyblok-Preview-Mode", "true");
-  Astro.response.headers.set("cache-control", "no-store");
+  Astro.response.headers.set('X-Storyblok-Preview-Mode', 'true');
+  Astro.response.headers.set('cache-control', 'no-store');
 }
 
 try {
   story = await StoryblokApi.getPage(slug, {
-    version: "draft",
+    version: 'draft',
+    resolve_links: 'url',
+    resolve_relations: ['church_members.members'],
   });
 
   if (!story) {
@@ -27,20 +29,25 @@ try {
   if (error.status === 404) {
     return new Response(null, {
       status: 404,
-      statusText: "Not found",
+      statusText: 'Not found',
     });
   }
+  console.log('Error: ', error);
+  return new Response(null, {
+    status: error.status,
+    statusText: 'Internal Server Error',
+  });
 }
 
 // The browser should always check freshness
 Astro.response.headers.set(
-  "cache-control",
-  "public, max-age=0, must-revalidate",
+  'cache-control',
+  'public, max-age=0, must-revalidate'
 );
 // The CDN should cache for a year, but revalidate if the cache tag changes
-Astro.response.headers.set("netlify-cdn-cache-control", "s-maxage=31536000");
+Astro.response.headers.set('netlify-cdn-cache-control', 's-maxage=31536000');
 // Tag the response with the slug so we can purge it later
-Astro.response.headers.set("netlify-cache-tag", slug);
+Astro.response.headers.set('netlify-cache-tag', slug);
 ---
 
 <Layout>

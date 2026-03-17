@@ -1,0 +1,44 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+import { twJoin } from 'tailwind-merge';
+import ChurchMember from '@/components/ChurchMember.astro';
+
+const { blok } = Astro.props;
+const {
+  tagline,
+  title,
+  subtitle,
+  background_color = 'bg-white',
+  members,
+} = blok;
+
+console.log('members', members);
+
+let textColor = 'text-black';
+let taglineColor = 'text-primary';
+
+if (background_color === 'bg-primary' || background_color === 'bg-black') {
+  textColor = 'text-white';
+  taglineColor = 'text-white';
+}
+---
+
+<section
+  class={twJoin('church-members space', background_color)}
+  {...storyblokEditable(blok)}
+>
+  <div class="mx-container">
+    <small class={twJoin(taglineColor, 'uppercase text-sm font-black')}>
+      {tagline}
+    </small>
+    <h3 class={twJoin(textColor, 'mb-2 font-display')}>{title}</h3>
+    {
+      subtitle && (
+        <p class={twJoin(textColor, 'text-base md:max-w-3/5')}>{subtitle}</p>
+      )
+    }
+    <div class="mt-3 lg:mt-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      {members.map(({ content }: any) => <ChurchMember blok={content} />)}
+    </div>
+  </div>
+</section>
