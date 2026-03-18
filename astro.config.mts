@@ -36,6 +36,7 @@ export default defineConfig({
         carousel: 'storyblok/bloks/Carousel',
         bible_verse: 'storyblok/bloks/BibleVerse',
         church_members: 'storyblok/bloks/ChurchMembers',
+        text_carousel: 'storyblok/bloks/TextCarousel',
 
         // Page types
         homepage: 'storyblok/pages/Home',

@@ -1,0 +1,37 @@
+---
+import RichTextRenderer from 'storyblok-rich-text-astro-renderer/RichTextRenderer.astro';
+import { storyblokEditable } from '@storyblok/astro';
+import { twMerge } from 'tailwind-merge';
+import Image from '@/storyblok/nodes/Image.astro';
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
+
+const { body, class: className } = Astro.props;
+---
+
+<RichTextRenderer
+  content={body}
+  schema={{
+    nodes: {
+      image: node => ({
+        component: Image,
+        props: {
+          title: node.attrs?.title,
+          ...node.attrs,
+        },
+      }),
+    },
+    marks: {
+      textStyle: node => ({
+        props: { style: null },
+      }),
+    },
+  }}
+  resolver={blok => {
+    return {
+      component: StoryblokComponent,
+      props: { blok },
+    };
+  }}
+  class={twMerge('rich-text wysiwyg max-w-screen-md', className)}
+  {...storyblokEditable(body)}
+/>

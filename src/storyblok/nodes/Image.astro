@@ -1,0 +1,13 @@
+---
+const { src, alt, title } = Astro.props;
+---
+
+<figure class="w-full">
+  <img
+    src={src}
+    alt={alt}
+    loading="lazy"
+    class="w-full aspect-2/1 object-cover"
+  />
+  {title && <figcaption>{title}</figcaption>}
+</figure>

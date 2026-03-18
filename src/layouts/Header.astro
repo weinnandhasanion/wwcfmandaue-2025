@@ -130,7 +130,7 @@ const isHome = pathname === "/" || pathname === "/home";
         links.map(({ link, navigation_items }: any) => (
           <a
             href={link.cached_url || link.url}
-            class="group flex items-center justify-between gap-1.5 w-full border-b border-white/30 pb-2 link light text-lg"
+            class="group menu-link flex items-center justify-between gap-1.5 w-full border-b border-white/30 pb-2 link light text-lg"
           >
             {link.title}
             {navigation_items && navigation_items.length > 0 && (
@@ -155,7 +155,7 @@ const isHome = pathname === "/" || pathname === "/home";
 
       <a
         href={cta.cached_url || cta.url}
-        class="group flex items-center justify-between gap-1.5 w-full border-b border-white/30 last:border-none pb-2 link light text-lg"
+        class="group menu-link flex items-center justify-between gap-1.5 w-full border-b border-white/30 last:border-none pb-2 link light text-lg"
       >
         {cta.title}
       </a>

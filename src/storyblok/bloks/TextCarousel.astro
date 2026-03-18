@@ -1,0 +1,98 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+import { twJoin } from 'tailwind-merge';
+import SwiperProgressBar from '@/components/SwiperProgressBar.astro';
+import RichText from '@/components/RichText.astro';
+import { hasLink, isRichText } from '@/utils/helper';
+import Link from '@/components/Link.astro';
+
+const { blok } = Astro.props;
+const { title, subtitle, tagline, items, background_color = 'bg-white' } = blok;
+
+const swiperId = blok._uid;
+---
+
+<section
+  class={twJoin('text-carousel space', background_color)}
+  {...storyblokEditable(blok)}
+>
+  <div class="mx-container">
+    <small class={twJoin('text-primary uppercase text-sm font-black')}>
+      {tagline}
+    </small>
+    {title && <h3 class={twJoin('text-black mb-2 font-display')}>{title}</h3>}
+    {
+      subtitle && (
+        <p class={twJoin('text-black text-base md:max-w-3/5')}>{subtitle}</p>
+      )
+    }
+    <div class="relative mt-4 md:mt-8">
+      <div
+        id={swiperId}
+        data-swiper-text-carousel
+        class="swiper !overflow-visible"
+      >
+        <div class="swiper-wrapper">
+          {
+            items?.map((item: any) => (
+              <div
+                class="swiper-slide overflow-hidden last:border-none border-r border-solid border-gray-200 py-5 pr-5"
+                {...storyblokEditable(item)}
+              >
+                <div class="min-h-[200px] md:min-h-[240px] flex flex-col gap-2">
+                  <h5 class="font-display text-primary">{item.title}</h5>
+                  {isRichText(item.body) && <RichText body={item.body} />}
+
+                  {hasLink(item.link) && (
+                    <div class="flex-1 flex items-end">
+                      <Link link={item.link} className="link primary" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <SwiperProgressBar
+          id={`text-carousel-pagination-${swiperId}`}
+          barColor="black"
+          className="mt-8"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import Swiper from 'swiper';
+  import { Pagination } from 'swiper/modules';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const swiperContainers = document.querySelectorAll(
+      '[data-swiper-text-carousel]'
+    ) as NodeListOf<HTMLElement>;
+
+    swiperContainers.forEach(swiper => {
+      const swiperId = swiper.id;
+
+      new Swiper(swiper, {
+        modules: [Pagination],
+        spaceBetween: 16,
+        slidesPerView: 2,
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+          },
+          1024: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+          },
+        },
+        pagination: {
+          el: `#text-carousel-pagination-${swiperId}`,
+          type: 'progressbar',
+        },
+      });
+    });
+  });
+</script>

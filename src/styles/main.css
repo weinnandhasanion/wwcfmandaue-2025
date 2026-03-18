@@ -4,6 +4,7 @@
 @import "./utilities.css";
 @import "./components.css";
 @import "./typography.css";
+@import "./rich-text.css";
 
 @import "swiper/css";
 @import "swiper/css/navigation";
@@ -21,6 +22,7 @@ body {
 
 .bg-primary + .bg-primary,
 .bg-black + .bg-black,
-.bg-white + .bg-white {
+.bg-white + .bg-white,
+.bg-gray-50 + .bg-gray-50 {
   @apply !pt-0;
 }

@@ -1,7 +1,7 @@
-import crypto from "crypto";
+import crypto from 'crypto';
 
 export const getContentVersion = (previewMode: boolean) => {
-  return previewMode ? "draft" : "published";
+  return previewMode ? 'draft' : 'published';
 };
 
 export const hasImage = (image: any) => {
@@ -13,7 +13,7 @@ export const hasImage = (image: any) => {
 export const hasLink = (link: any) => {
   if (!link) return false;
 
-  return link.linktype === "story"
+  return link.linktype === 'story'
     ? !!(link.cached_url || link.url)
     : !!link.url;
 };
@@ -21,21 +21,28 @@ export const hasLink = (link: any) => {
 export const getLinkAttributes = (link: any) => {
   if (!link) return {};
 
-  let href = link.linktype === "story" ? `/${link.cached_url}` : link.url;
+  let href = link.linktype === 'story' ? `/${link.cached_url}` : link.url;
   if (!!link.anchor) href += `#${link.anchor}`;
 
   return {
     href,
     title: link.title,
     rel: link.rel,
-    target: link.target || "_self",
+    target: link.target || '_self',
   };
 };
 
+export function isRichText(rich_text: any) {
+  return (
+    rich_text &&
+    rich_text.content.length > 0 &&
+    rich_text.content[0].content?.length > 0
+  );
+}
 // Ensure whoever is using Storyblok preview has the right to.
 export function isAllowedToPreview(request: Request) {
   // localhost check/override
-  if (["localhost"].some((domain) => request.url.includes(domain))) {
+  if (['localhost'].some(domain => request.url.includes(domain))) {
     return true;
   }
 
@@ -43,20 +50,20 @@ export function isAllowedToPreview(request: Request) {
   const STORYBLOK_ACCESS_TOKEN = import.meta.env.STORYBLOK_PREVIEW_ACCESS_TOKEN;
 
   if (
-    url.searchParams.has("_storyblok") &&
-    url.searchParams.has("_storyblok_tk[token]")
+    url.searchParams.has('_storyblok') &&
+    url.searchParams.has('_storyblok_tk[token]')
   ) {
     // check for storyblok params
-    const space_id = url.searchParams.get("_storyblok_tk[space_id]");
-    const timestamp = url.searchParams.get("_storyblok_tk[timestamp]");
-    const token = url.searchParams.get("_storyblok_tk[token]");
+    const space_id = url.searchParams.get('_storyblok_tk[space_id]');
+    const timestamp = url.searchParams.get('_storyblok_tk[timestamp]');
+    const token = url.searchParams.get('_storyblok_tk[token]');
 
     // Create a token for comparison, this should be the same as the one
     // created in the Storyblok editor. "space_id:preview_token:timestamp"
     const controlToken = crypto
-      .createHash("sha1")
-      .update(`${space_id}:${STORYBLOK_ACCESS_TOKEN}:${timestamp}`, "binary")
-      .digest("hex");
+      .createHash('sha1')
+      .update(`${space_id}:${STORYBLOK_ACCESS_TOKEN}:${timestamp}`, 'binary')
+      .digest('hex');
 
     return token == controlToken;
   }

@@ -1,8 +1,10 @@
 ---
-const { id, barColor = 'black' } = Astro.props;
+import { twJoin } from 'tailwind-merge';
+
+const { id, barColor = 'black', className } = Astro.props;
 ---
 
-<div id={id} class="swiper-pagination-progressbar"></div>
+<div id={id} class={twJoin('swiper-pagination-progressbar', className)}></div>
 
 <style define:vars={{ barColor }}>
   .swiper-pagination-progressbar {

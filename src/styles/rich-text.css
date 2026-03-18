@@ -1,0 +1,5 @@
+.rich-text {
+    p {
+        @apply text-[12px] md:text-sm;
+    }
+}
